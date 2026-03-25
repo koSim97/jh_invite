@@ -29,7 +29,7 @@ const CONFIG = {
   bride: {
     name: "최지희",
     nameEn: "Bride",
-    father: "최홍식",
+    father: "최흥식",
     mother: "박은진",
     fatherDeceased: false,
     motherDeceased: false
@@ -72,7 +72,7 @@ const CONFIG = {
     ],
     bride: [
       { role: "신부", name: "최지희", bank: "하나은행", number: "000-000-000000" },
-      { role: "아버지", name: "최홍식", bank: "기업은행", number: "000-000-000000" },
+      { role: "아버지", name: "최흥식", bank: "기업은행", number: "000-000-000000" },
       { role: "어머니", name: "박은진", bank: "농협은행", number: "000-000-000000" }
     ]
   },

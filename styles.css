@@ -1226,3 +1226,21 @@ a {
     margin-top: 20px; /* 리스트와 번호 사이 간격 */
     padding-bottom: 20px;
 }
+.page-btn {
+    min-width: 32px; /* 내용에 따라 유동적으로 */
+    height: 32px;
+    padding: 0 5px;
+    border-radius: 4px; /* 살짝 각진 느낌이 숫자가 많을 때 깔끔합니다 */
+    border: 1px solid var(--color-border);
+    background: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 화살표 버튼은 강조하고 싶다면 */
+.page-btn:not(.active) {
+    color: var(--color-text-muted);
+}

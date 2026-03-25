@@ -126,6 +126,56 @@
     }
   }
 
+    window.renderPagination = function(currentPage) {
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = '';
+    
+    const totalPages = Math.ceil(allMessages.length / PAGE_SIZE);
+    const PAGE_GROUP_SIZE = 5; // 한 번에 보여줄 숫자 개수
+    
+    // 현재 페이지가 속한 그룹의 시작과 끝 계산
+    let startPage = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+    let endPage = Math.min(startPage + PAGE_GROUP_SIZE - 1, totalPages);
+
+    // [이전] 버튼
+    if (startPage > 1) {
+        const prevBtn = document.createElement('button');
+        prevBtn.innerText = '<';
+        prevBtn.className = 'page-btn';
+        prevBtn.onclick = () => {
+            const targetPage = startPage - 1;
+            renderPage(targetPage);
+            renderPagination(targetPage);
+        };
+        paginationContainer.appendChild(prevBtn);
+    }
+
+    // 숫자 버튼들
+    for (let i = startPage; i <= endPage; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+        btn.onclick = () => {
+            renderPage(i);
+            renderPagination(i);
+            document.getElementById('guestbook-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        paginationContainer.appendChild(btn);
+    }
+
+    // [다음] 버튼
+    if (endPage < totalPages) {
+        const nextBtn = document.createElement('button');
+        nextBtn.innerText = '>';
+        nextBtn.className = 'page-btn';
+        nextBtn.onclick = () => {
+            const targetPage = endPage + 1;
+            renderPage(targetPage);
+            renderPagination(targetPage);
+        };
+        paginationContainer.appendChild(nextBtn);
+    }
+}
   // 초기 실행
   loadAllMessages();
 </script>

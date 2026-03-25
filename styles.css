@@ -1211,7 +1211,18 @@ a {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 방명록 아이템 간격 조정 (리스트가 바뀔 때 어색하지 않게) */
+/* styles.css 하단 수정 */
 .guestbook-container {
-    min-height: 400px; /* 페이지 넘길 때 높이가 널뛰지 않도록 최소 높이 설정 */
+    margin-top: 20px;
+    /* 내용이 없어도 최소한의 높이를 잡아주되, 너무 크지 않게 조절하세요 */
+    min-height: 100px; 
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px; /* 리스트와 번호 사이 간격 */
+    padding-bottom: 20px;
 }

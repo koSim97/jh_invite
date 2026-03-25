@@ -204,7 +204,7 @@
         </div>
       </div>
     </section>
-<section class="section">
+<!-- <section class="section">
   <div class="section__inner animate-item" data-animate="fade-up">
     <h2 class="section__title">GUESTBOOK</h2>
     <div class="ornament">✿</div>
@@ -214,6 +214,20 @@
     <livere-comment client-id="lTfSu1Mv3TpOQIs5Uxx9"></livere-comment>
     <script type="module" src="https://www.livere.org/livere-widget.js"></script>
     </div>
+</section> -->
+    <section class="section">
+  <div class="section__inner animate-item" data-animate="fade-up">
+    <h2 class="section__title">GUESTBOOK</h2>
+    <div class="ornament">✿</div>
+    
+    <div class="guestbook-form" style="margin-bottom: 30px;">
+      <input type="text" id="guestName" placeholder="성함" class="btn--outline" style="width: 100%; margin-bottom: 10px; padding: 10px;">
+      <textarea id="guestMsg" placeholder="축하 메시지를 남겨주세요" class="btn--outline" style="width: 100%; height: 80px; margin-bottom: 10px; padding: 10px; font-family: inherit;"></textarea>
+      <button onclick="writeMessage()" class="btn--outline" style="width: 100%; background: var(--color-accent); color: white; border: none;">등록하기</button>
+    </div>
+
+    <div id="guestbook-list" class="guestbook-container"></div>
+  </div>
 </section>
 
     <section class="section">

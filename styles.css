@@ -1169,3 +1169,49 @@ a {
 }
 .guestbook-message { font-size: 0.9375rem; line-height: 1.6; }
 .guestbook-name { font-size: 0.8125rem; color: var(--color-accent); text-align: right; margin-top: 5px; }
+
+/* 방명록 페이징 컨테이너 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* 기본 페이지 버튼 스타일 */
+.page-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%; /* 동그란 버튼 */
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 마우스 올렸을 때 */
+.page-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* ⭐ 현재 활성화된 페이지 번호 스타일 */
+.page-btn.active {
+    background-color: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 방명록 아이템 간격 조정 (리스트가 바뀔 때 어색하지 않게) */
+.guestbook-container {
+    min-height: 400px; /* 페이지 넘길 때 높이가 널뛰지 않도록 최소 높이 설정 */
+}

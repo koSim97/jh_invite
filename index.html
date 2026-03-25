@@ -22,11 +22,11 @@
   <link rel="stylesheet" href="styles.css">
   <script src="config.js"></script>
   <script type="module">
-  // 1. Firebase 라이브러리 임포트 (CDN 방식)
+  // 1. Firebase 라이브러리 가져오기
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getDatabase, ref, push, get, query, orderByChild } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // 2. Firebase 설정 (Firebase 콘솔에서 복사한 것)
+  // 2. 본인의 Firebase 설정 (콘솔에서 복사한 내용으로 교체하세요)
   const firebaseConfig = {
   apiKey: "AIzaSyCkhKzOtwGYWrxrFxY8uHZGAxJdrDlTRyE",
   authDomain: "jhwedding-5a9c1.firebaseapp.com",
@@ -41,44 +41,93 @@
   const db = getDatabase(app);
   const messagesRef = ref(db, 'messages');
 
-  // 4. 메시지 쓰기 함수 (전역 window 객체에 등록해야 HTML 버튼에서 인식함)
-  window.writeMessage = function() {
+  const PAGE_SIZE = 5; 
+  let allMessages = []; 
+
+  // 4. 메시지 작성 함수 (버전 1: 작성 후 목록 새로고침)
+  window.writeMessage = async function() {
     const nameInput = document.getElementById('guestName');
     const msgInput = document.getElementById('guestMsg');
 
     if (nameInput.value.trim() && msgInput.value.trim()) {
-      push(messagesRef, {
-        name: nameInput.value,
-        message: msgInput.value,
-        timestamp: Date.now()
-      }).then(() => {
+      try {
+        await push(messagesRef, {
+          name: nameInput.value,
+          message: msgInput.value,
+          timestamp: Date.now()
+        });
         nameInput.value = '';
         msgInput.value = '';
-      });
+        alert("축하해 주셔서 감사합니다! ✿");
+        loadAllMessages(); // 작성 후 다시 목록 불러오기
+      } catch (e) {
+        console.error("저장 실패: ", e);
+      }
     } else {
-      alert("성함과 메시지를 입력해주세요! ✿");
+      alert("성함과 메시지를 모두 입력해주세요.");
     }
   };
 
-  // 5. 메시지 읽기 (실시간 리스너)
-  onValue(messagesRef, (snapshot) => {
+  // 5. 모든 데이터 불러오기 및 페이징 처리
+  async function loadAllMessages() {
+    try {
+      const snapshot = await get(query(messagesRef, orderByChild('timestamp')));
+      const data = snapshot.val();
+      
+      if (data) {
+        // 최신순 정렬
+        allMessages = Object.values(data).sort((a, b) => b.timestamp - a.timestamp);
+        renderPage(1); 
+        renderPagination(1); 
+      }
+    } catch (e) {
+      console.error("데이터 로딩 실패: ", e);
+    }
+  }
+
+  // 6. 특정 페이지 렌더링
+  window.renderPage = function(page) {
     const listContainer = document.getElementById('guestbook-list');
     listContainer.innerHTML = '';
-    const data = snapshot.val();
+
+    const start = (page - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const pageItems = allMessages.slice(start, end);
+
+    pageItems.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'guestbook-item';
+      div.innerHTML = `
+        <p class="guestbook-message">${item.message}</p>
+        <p class="guestbook-name">- ${item.name}님</p>
+      `;
+      listContainer.appendChild(div);
+    });
+  }
+
+  // 7. 페이지네이션 버튼 생성 (아까 드린 CSS 클래스 적용)
+  window.renderPagination = function(currentPage) {
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = '';
     
-    if (data) {
-      // 최신글이 위로 오게 정렬하여 출력
-      Object.values(data).reverse().forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'guestbook-item';
-        div.innerHTML = `
-          <p class="guestbook-message">${item.message}</p>
-          <p class="guestbook-name">- ${item.name}님</p>
-        `;
-        listContainer.appendChild(div);
-      });
+    const totalPages = Math.ceil(allMessages.length / PAGE_SIZE);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.innerText = i;
+      btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+      
+      btn.onclick = () => {
+        renderPage(i);
+        renderPagination(i);
+        document.getElementById('guestbook-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      paginationContainer.appendChild(btn);
     }
-  });
+  }
+
+  // 초기 실행
+  loadAllMessages();
 </script>
 </head>
 <body>
@@ -286,6 +335,11 @@
     </div>
 
     <div id="guestbook-list" class="guestbook-container"></div>
+    <div id="guestbook-list" class="guestbook-container">
+    </div>
+
+<div id="pagination" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+    </div>
   </div>
 </section>
 

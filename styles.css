@@ -1266,8 +1266,8 @@ img {
   touch-action: manipulation;              /* 터치 지연 감소 및 기본 동작 제어 */
 }
 
-img:active {
+/* img:active {
   transform: scale(1.5);
   z-index: 1000;
   position: relative;
-}
+} */

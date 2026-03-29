@@ -179,14 +179,8 @@
   // 초기 실행
   loadAllMessages();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
-<script>
-  // 모든 이미지에 확대 기능 적용
-  medium-zoom('img');
-</script>
 </head>
 <body>
-
   <!-- ═══ Curtain Opening Animation ═══ -->
   <div id="curtain" class="curtain">
     <div class="curtain__left"></div>
@@ -430,5 +424,13 @@
   </main>
 
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
+
+<script>
+  // 페이지의 모든 요소가 로드된 후 실행
+  window.addEventListener('load', function() {
+    medium-zoom('img');
+  });
+</script>
 </body>
 </html>

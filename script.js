@@ -2,25 +2,28 @@
  * Classic Elegant Wedding Invitation
  * Korean Mobile 청첩장 - Script
  */
-// 1. 이미지 우클릭 및 꾹 누르기 메뉴 차단
-document.addEventListener('contextmenu', function(e) {
-  if (e.target.tagName === 'IMG') {
-    e.preventDefault();
-  }
-}, false);
+// 1. 카카오톡/모바일 브라우저 꾹 누르기(컨텍스트 메뉴) 차단
+window.oncontextmenu = function(event) {
+    if (event.target.tagName === 'IMG') {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+    }
+};
 
-// 2. 드래그 방지
-document.addEventListener('dragstart', function(e) {
-  if (e.target.tagName === 'IMG') {
-    e.preventDefault();
-  }
-}, false);
-
+// 2. 카카오톡 인앱 브라우저 전용: 터치 길게 누르기 방지
 document.addEventListener('touchstart', function(e) {
-  if (e.target.tagName === 'IMG') {
-    e.target.style.webkitTouchCallout = 'none';
-  }
+    if (e.target.tagName === 'IMG') {
+        // iOS/안드로이드 공통: 시스템 메뉴 호출 방지
+        e.target.style.webkitTouchCallout = 'none';
+        e.target.style.webkitUserSelect = 'none';
+    }
 }, { passive: true });
+
+// 3. 이미지 드래그 및 선택 방지
+document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
 
 (function () {
   'use strict';

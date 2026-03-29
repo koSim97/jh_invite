@@ -422,7 +422,18 @@
     </footer>
 
   </main>
-<script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
+//<script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe.min.css">
+<script type="module">
+  import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe-lightbox.esm.min.js';
+  
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#galleryGrid', // 갤러리 컨테이너 ID
+    children: 'a',           // 클릭될 요소 (아래 JS 수정 참고)
+    pswpModule: () => import('https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe.esm.min.js')
+  });
+  lightbox.init();
+</script>
   <script src="script.js"></script>
 </body>
 </html>

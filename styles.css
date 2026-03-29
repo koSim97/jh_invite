@@ -1257,4 +1257,12 @@ a {
 img {
   -webkit-touch-callout: none;
   user-select: none;
+   transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+img:active { /* 모바일에서 터치하고 있을 때 */
+  transform: scale(1.5); /* 1.5배 확대 */
+  z-index: 1000;
+  position: relative;
 }

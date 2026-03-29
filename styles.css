@@ -1255,14 +1255,19 @@ a {
 
 /* 꾹 누르기 방지 (이미 말씀드린 것 재강조) */
 img {
-  -webkit-touch-callout: none;
-  user-select: none;
-   transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
   cursor: zoom-in;
+  
+  /* ─── 꾹 눌렀을 때 저장 메뉴 방지 (아이폰/안드로이드 공통) ─── */
+  -webkit-touch-callout: none !important; /* iOS Safari: 길게 누르기 메뉴 차단 */
+  -webkit-user-select: none !important;    /* 텍스트 선택 방지 */
+  user-select: none !important;
+  -webkit-user-drag: none !important;     /* 드래그 방지 */
+  touch-action: manipulation;              /* 터치 지연 감소 및 기본 동작 제어 */
 }
 
-img:active { /* 모바일에서 터치하고 있을 때 */
-  transform: scale(1.5); /* 1.5배 확대 */
+img:active {
+  transform: scale(1.5);
   z-index: 1000;
   position: relative;
 }

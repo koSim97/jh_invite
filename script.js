@@ -16,6 +16,12 @@ document.addEventListener('dragstart', function(e) {
   }
 }, false);
 
+document.addEventListener('touchstart', function(e) {
+  if (e.target.tagName === 'IMG') {
+    e.target.style.webkitTouchCallout = 'none';
+  }
+}, { passive: true });
+
 (function () {
   'use strict';
 

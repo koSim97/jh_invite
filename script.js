@@ -465,19 +465,21 @@
     const placeholder = grid.querySelector('.loading-placeholder');
     if (placeholder) placeholder.remove();
 
-    if (galleryImages.length === 0) {
-      const gallerySection = $('#gallery');
-      if (gallerySection) gallerySection.style.display = 'none';
-      return;
-    }
+    if (galleryImages.length === 0) return;
 
     galleryImages.forEach((src, i) => {
-      const div = document.createElement('div');
-      div.className = 'gallery__item animate-item';
-      div.setAttribute('data-animate', 'scale-in');
-      // ✅ 클릭 이벤트(openPhotoModal)를 삭제했습니다.
-      div.innerHTML = `<img src="${src}" alt="갤러리 사진 ${i + 1}" loading="lazy">`;
-      grid.appendChild(div);
+      const a = document.createElement('a');
+      a.className = 'gallery__item animate-item';
+      a.href = src; // 확대될 이미지 경로
+      a.target = '_blank';
+      a.setAttribute('data-pswp-width', '1200'); // 적당한 가로 크기 (숫자만)
+      a.setAttribute('data-pswp-height', '1600'); // 적당한 세로 크기 (숫자만)
+      a.setAttribute('data-animate', 'scale-in');
+
+      a.innerHTML = `<img src="${src}" alt="갤러리 사진 ${i + 1}" loading="lazy">`;
+      
+      // 기존 클릭 이벤트(openPhotoModal)는 삭제된 상태 유지
+      grid.appendChild(a);
     });
   }
 

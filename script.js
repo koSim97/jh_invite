@@ -438,14 +438,34 @@
      Gallery Section
      ═══════════════════════════════════════════ */
 
+  // function initGallery(galleryImages) {
+  //   const grid = $('#galleryGrid');
+  //   // Remove loading placeholder if present
+  //   const placeholder = grid.querySelector('.loading-placeholder');
+  //   if (placeholder) placeholder.remove();
+
+  //   if (galleryImages.length === 0) {
+  //     // Hide gallery section if no images found
+  //     const gallerySection = $('#gallery');
+  //     if (gallerySection) gallerySection.style.display = 'none';
+  //     return;
+  //   }
+
+  //   galleryImages.forEach((src, i) => {
+  //     const div = document.createElement('div');
+  //     div.className = 'gallery__item animate-item';
+  //     div.setAttribute('data-animate', 'scale-in');
+  //     div.innerHTML = `<img src="${src}" alt="갤러리 사진 ${i + 1}" loading="lazy">`;
+  //     div.addEventListener('click', () => openPhotoModal(galleryImages, i));
+  //     grid.appendChild(div);
+  //   });
+  // }
   function initGallery(galleryImages) {
     const grid = $('#galleryGrid');
-    // Remove loading placeholder if present
     const placeholder = grid.querySelector('.loading-placeholder');
     if (placeholder) placeholder.remove();
 
     if (galleryImages.length === 0) {
-      // Hide gallery section if no images found
       const gallerySection = $('#gallery');
       if (gallerySection) gallerySection.style.display = 'none';
       return;
@@ -455,8 +475,8 @@
       const div = document.createElement('div');
       div.className = 'gallery__item animate-item';
       div.setAttribute('data-animate', 'scale-in');
+      // ✅ 클릭 이벤트(openPhotoModal)를 삭제했습니다.
       div.innerHTML = `<img src="${src}" alt="갤러리 사진 ${i + 1}" loading="lazy">`;
-      div.addEventListener('click', () => openPhotoModal(galleryImages, i));
       grid.appendChild(div);
     });
   }
@@ -699,6 +719,11 @@
      ═══════════════════════════════════════════ */
 
   async function init() {
+    document.addEventListener('contextmenu', function(e) {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+}, false);
     setMetaTags();
     initCurtain();
     initHero();
@@ -710,7 +735,7 @@
     showLoadingPlaceholders();
 
     // Init sections that don't depend on image detection
-    initPhotoModal();
+    //initPhotoModal();
     initLocation();
     initAccounts();
     initFooter();
@@ -729,6 +754,13 @@
     // Render sections with discovered images
     //initStory(storyImages);
     initGallery(galleryImages);
+
+    if (window.mediumZoom) {
+      window.mediumZoom('.gallery__item img, .location__map-img', {
+        margin: 24,
+        background: 'rgba(0, 0, 0, 0.9)', // 배경 진하게
+      });
+    }
   }
 
   if (document.readyState === 'loading') {

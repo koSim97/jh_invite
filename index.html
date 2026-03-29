@@ -425,12 +425,20 @@
 <script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
 
 <script>
-  // 페이지의 모든 요소가 로드된 후 실행
   window.addEventListener('load', function() {
-    medium-zoom('img', {
-      margin: 24,          // 확대 시 화면 가장자리 여백
-      background: '#000',  // 확대 시 배경색 (진하게 요청하셔서 검정으로 설정)
-      scrollOffset: 0      // 확대 중 스크롤 시 닫기 여부
+    const zoom = medium-zoom('img', {
+      margin: 24,
+      background: '#000',
+      scrollOffset: 0
+    });
+
+    // 확대된 상태에서도 저장 메뉴가 뜨지 않도록 추가 차단
+    zoom.on('opened', () => {
+      const zoomedImg = document.querySelector('.medium-zoom-image--opened');
+      if (zoomedImg) {
+        zoomedImg.addEventListener('contextmenu', e => e.preventDefault());
+        zoomedImg.style.webkitTouchCallout = 'none'; // iOS 차단
+      }
     });
   });
 </script>

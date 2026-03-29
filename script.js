@@ -495,28 +495,18 @@ document.addEventListener('dragstart', function(e) {
   let touchEndY = 0;
 
   function openPhotoModal(images, index) {
-  modalImages = images;
-  modalIndex = index;
-  showModalImage(); // 사진을 화면에 그리는 함수
 
-  // 🔥 [추가] 모달 내 이미지 요소를 찾아서 직접 저장 방지 명령을 내립니다.
-  const modalImg = document.getElementById('modalImg');
-  if (modalImg) {
-    // 1. 꾹 눌렀을 때 메뉴 뜨는 것 차단 (가장 강력한 차단 방식)
-    modalImg.oncontextmenu = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
+    modalImages = images;
 
-    // 2. iOS/카톡 인앱 브라우저 전용 터치 메뉴 차단
-    modalImg.style.webkitTouchCallout = 'none';
-    modalImg.style.userSelect = 'none';
+    modalIndex = index;
+
+    showModalImage();
+
+    $('#photoModal').classList.add('is-open');
+
+    document.body.classList.add('no-scroll');
+
   }
-
-  $('#photoModal').classList.add('is-open');
-  document.body.classList.add('no-scroll');
-}
 
   function closePhotoModal() {
     $('#photoModal').classList.remove('is-open');

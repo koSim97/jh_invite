@@ -2,6 +2,19 @@
  * Classic Elegant Wedding Invitation
  * Korean Mobile 청첩장 - Script
  */
+// 1. 이미지 우클릭 및 꾹 누르기 메뉴 차단
+document.addEventListener('contextmenu', function(e) {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+}, false);
+
+// 2. 드래그 방지
+document.addEventListener('dragstart', function(e) {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+}, false);
 
 (function () {
   'use strict';
